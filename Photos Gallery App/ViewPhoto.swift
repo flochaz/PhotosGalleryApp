@@ -16,7 +16,7 @@ class ViewPhoto: UIViewController {
     
     //@Return to photos
     @IBAction func btnCancel(sender : AnyObject) {
-        self.navigationController.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     //@Export photo
@@ -33,7 +33,7 @@ class ViewPhoto: UIViewController {
                 let request = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
                 request.removeAssets([self.photosAsset[self.index]])
                 }, completionHandler: {(success, error)in
-                
+                    
                     NSLog("\nDeleted Image -> %@", (success ? "Success":"Error!"))
                     alert.dismissViewControllerAnimated(true, completion: nil)
                     
@@ -48,14 +48,14 @@ class ViewPhoto: UIViewController {
                         self.index = self.photosAsset.count - 1
                     }
                     self.displayPhoto()
-                })
+            })
             
             
-            }))
+        }))
         alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: {(alertAction)in
             //Do not delete photo
             alert.dismissViewControllerAnimated(true, completion: nil)
-            }))
+        }))
         
         self.presentViewController(alert, animated: true, completion: nil)
         
@@ -63,17 +63,17 @@ class ViewPhoto: UIViewController {
     @IBOutlet var imgView : UIImageView!
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController.hidesBarsOnTap = true
+        self.navigationController?.hidesBarsOnTap = true
         
         self.displayPhoto()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -85,10 +85,10 @@ class ViewPhoto: UIViewController {
         let imageManager = PHImageManager.defaultManager()
         var ID = imageManager.requestImageForAsset(self.photosAsset[self.index] as PHAsset, targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: nil, resultHandler: {
             (result, info)->Void in
-                self.imgView.image = result
-            })
+            self.imgView.image = result
+        })
     }
-
-
-
+    
+    
+    
 }
